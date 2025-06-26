@@ -3,6 +3,7 @@ import { Calendar, MapPin, DollarSign, Building, FileText, Clock } from "lucide-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface Tender {
   id: string;
@@ -21,6 +22,8 @@ interface TenderCardProps {
 }
 
 export const TenderCard = ({ tender }: TenderCardProps) => {
+  const navigate = useNavigate();
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('ru-RU', {
@@ -40,6 +43,10 @@ export const TenderCard = ({ tender }: TenderCardProps) => {
 
   const daysLeft = getDaysLeft(tender.deadline);
   const isUrgent = daysLeft <= 7;
+
+  const handleDetailsClick = () => {
+    navigate(`/tender/${tender.id}`);
+  };
 
   return (
     <Card className="bg-white/90 backdrop-blur-sm border border-blue-100 hover:shadow-xl transition-all duration-300 hover:border-blue-300 group">
@@ -63,7 +70,10 @@ export const TenderCard = ({ tender }: TenderCardProps) => {
                 </Badge>
               )}
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+            <h3 
+              className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors cursor-pointer"
+              onClick={handleDetailsClick}
+            >
               {tender.title}
             </h3>
             <p className="text-sm text-gray-600 line-clamp-2">{tender.description}</p>
@@ -103,6 +113,7 @@ export const TenderCard = ({ tender }: TenderCardProps) => {
 
         <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
           <Button 
+            onClick={handleDetailsClick}
             className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
           >
             <FileText className="w-4 h-4 mr-2" />

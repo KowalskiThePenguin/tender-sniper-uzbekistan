@@ -6,12 +6,31 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TenderCard } from "@/components/TenderCard";
+import { TenderFilters } from "@/components/TenderFilters";
 import { DocumentHelper } from "@/components/DocumentHelper";
 import { NotificationPanel } from "@/components/NotificationPanel";
+
+interface FilterState {
+  category: string;
+  organization: string;
+  budgetMin: number;
+  budgetMax: number;
+  deadline: string;
+  status: string;
+}
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("tenders");
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    category: "Все категории",
+    organization: "Все организации", 
+    budgetMin: 0,
+    budgetMax: 50000000000,
+    deadline: "Все сроки",
+    status: "Все статусы"
+  });
   
   // Демо данные тендеров
   const mockTenders = [
@@ -50,11 +69,70 @@ const Index = () => {
     }
   ];
 
-  const filteredTenders = mockTenders.filter(tender =>
+  const applyFilters = (tenders: typeof mockTenders) => {
+    return tenders.filter(tender => {
+      // Category filter
+      if (filters.category !== "Все категории" && tender.category !== filters.category) {
+        return false;
+      }
+      
+      // Organization filter
+      if (filters.organization !== "Все организации" && tender.organization !== filters.organization) {
+        return false;
+      }
+      
+      // Budget filter
+      const budget = parseInt(tender.budget.replace(/,/g, ''));
+      if (budget < filters.budgetMin || budget > filters.budgetMax) {
+        return false;
+      }
+      
+      // Status filter
+      if (filters.status !== "Все статусы" && tender.status !== filters.status) {
+        return false;
+      }
+      
+      // Deadline filter
+      if (filters.deadline !== "Все сроки") {
+        const deadline = new Date(tender.deadline);
+        const today = new Date();
+        const diffDays = Math.ceil((deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        
+        switch (filters.deadline) {
+          case "Сегодня":
+            if (diffDays !== 0) return false;
+            break;
+          case "3 дня":
+            if (diffDays > 3) return false;
+            break;
+          case "7 дней":
+            if (diffDays > 7) return false;
+            break;
+          case "30 дней":
+            if (diffDays > 30) return false;
+            break;
+        }
+      }
+      
+      return true;
+    });
+  };
+
+  const filteredTenders = applyFilters(mockTenders).filter(tender =>
     tender.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     tender.organization.toLowerCase().includes(searchQuery.toLowerCase()) ||
     tender.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const getActiveFiltersCount = () => {
+    let count = 0;
+    if (filters.category !== "Все категории") count++;
+    if (filters.organization !== "Все организации") count++;
+    if (filters.budgetMin > 0 || filters.budgetMax < 50000000000) count++;
+    if (filters.deadline !== "Все сроки") count++;
+    if (filters.status !== "Все статусы") count++;
+    return count;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
@@ -139,9 +217,18 @@ const Index = () => {
                       className="pl-10 h-12 border-blue-200 focus:border-blue-500 focus:ring-blue-500"
                     />
                   </div>
-                  <Button variant="outline" className="h-12 px-6 border-blue-200 hover:bg-blue-50">
+                  <Button 
+                    variant="outline" 
+                    className="h-12 px-6 border-blue-200 hover:bg-blue-50"
+                    onClick={() => setShowFilters(true)}
+                  >
                     <Filter className="w-4 h-4 mr-2" />
                     Фильтры
+                    {getActiveFiltersCount() > 0 && (
+                      <Badge className="ml-2 bg-blue-100 text-blue-800">
+                        {getActiveFiltersCount()}
+                      </Badge>
+                    )}
                   </Button>
                   <Button className="h-12 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
                     <Calendar className="w-4 h-4 mr-2" />
@@ -149,11 +236,38 @@ const Index = () => {
                   </Button>
                 </div>
                 
+                {/* Active Filters Display */}
+                {getActiveFiltersCount() > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-200">
+                    <span className="text-sm text-gray-600 font-medium">Активные фильтры:</span>
+                    {filters.category !== "Все категории" && (
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        {filters.category}
+                      </Badge>
+                    )}
+                    {filters.organization !== "Все организации" && (
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        {filters.organization}
+                      </Badge>
+                    )}
+                    {filters.status !== "Все статусы" && (
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        {filters.status}
+                      </Badge>
+                    )}
+                    {filters.deadline !== "Все сроки" && (
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        {filters.deadline}
+                      </Badge>
+                    )}
+                  </div>
+                )}
+                
                 {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
                   <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100">
                     <div className="text-2xl font-bold text-blue-600">{filteredTenders.length}</div>
-                    <div className="text-sm text-gray-600">Активных тендеров</div>
+                    <div className="text-sm text-gray-600">Найдено тендеров</div>
                   </div>
                   <div className="text-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
                     <div className="text-2xl font-bold text-green-600">12</div>
@@ -174,7 +288,7 @@ const Index = () => {
                   <CardContent className="text-center py-12">
                     <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Тендеры не найдены</h3>
-                    <p className="text-gray-600">Попробуйте изменить параметры поиска</p>
+                    <p className="text-gray-600">Попробуйте изменить параметры поиска или фильтры</p>
                   </CardContent>
                 </Card>
               ) : (
@@ -189,6 +303,14 @@ const Index = () => {
         {activeTab === "documents" && <DocumentHelper />}
         {activeTab === "notifications" && <NotificationPanel />}
       </div>
+
+      {/* Filters Modal */}
+      <TenderFilters
+        isOpen={showFilters}
+        onClose={() => setShowFilters(false)}
+        onApply={setFilters}
+        activeFilters={filters}
+      />
     </div>
   );
 };
