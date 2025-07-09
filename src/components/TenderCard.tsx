@@ -1,5 +1,5 @@
 
-import { Calendar, MapPin, DollarSign, Building, FileText, Clock } from "lucide-react";
+import { Calendar, MapPin, DollarSign, Building, FileText, Clock, Heart } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,11 @@ interface Tender {
 
 interface TenderCardProps {
   tender: Tender;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string) => void;
 }
 
-export const TenderCard = ({ tender }: TenderCardProps) => {
+export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: TenderCardProps) => {
   const navigate = useNavigate();
 
   const formatDate = (dateString: string) => {
@@ -46,6 +48,12 @@ export const TenderCard = ({ tender }: TenderCardProps) => {
 
   const handleDetailsClick = () => {
     navigate(`/tender/${tender.id}`);
+  };
+
+  const handleFavoriteClick = () => {
+    if (onToggleFavorite) {
+      onToggleFavorite(tender.id);
+    }
   };
 
   return (
@@ -78,6 +86,16 @@ export const TenderCard = ({ tender }: TenderCardProps) => {
             </h3>
             <p className="text-sm text-gray-600 line-clamp-2">{tender.description}</p>
           </div>
+          {onToggleFavorite && (
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={handleFavoriteClick}
+              className={`ml-2 ${isFavorite ? 'text-red-500 hover:text-red-600' : 'text-gray-400 hover:text-red-500'}`}
+            >
+              <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+            </Button>
+          )}
         </div>
       </CardHeader>
       
@@ -118,12 +136,6 @@ export const TenderCard = ({ tender }: TenderCardProps) => {
           >
             <FileText className="w-4 h-4 mr-2" />
             Подробнее
-          </Button>
-          <Button 
-            variant="outline" 
-            className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300"
-          >
-            Добавить в избранное
           </Button>
           <Button 
             variant="outline" 

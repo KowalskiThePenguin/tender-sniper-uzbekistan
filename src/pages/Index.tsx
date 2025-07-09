@@ -1,12 +1,13 @@
-
 import { useState } from "react";
-import { Search, Bell, FileText, Calendar, Filter, TrendingUp } from "lucide-react";
+import { Search, Bell, FileText, Calendar, Filter, TrendingUp, Heart, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TenderCard } from "@/components/TenderCard";
 import { TenderFilters } from "@/components/TenderFilters";
+import { TenderCalendar } from "@/components/TenderCalendar";
+import { FavoriteTenders } from "@/components/FavoriteTenders";
 import { DocumentHelper } from "@/components/DocumentHelper";
 import { NotificationPanel } from "@/components/NotificationPanel";
 
@@ -23,6 +24,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("tenders");
   const [showFilters, setShowFilters] = useState(false);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [filters, setFilters] = useState<FilterState>({
     category: "Все категории",
     organization: "Все организации", 
@@ -38,7 +40,7 @@ const Index = () => {
       id: "1",
       title: "Поставка компьютерного оборудования",
       organization: "Министерство образования РУз",
-      budget: "250,000,000",
+      budget: "250000000",
       currency: "сум",
       deadline: "2025-01-15",
       status: "active",
@@ -49,7 +51,7 @@ const Index = () => {
       id: "2", 
       title: "Строительство автомобильной дороги",
       organization: "Комитет автомобильных дорог",
-      budget: "15,000,000,000",
+      budget: "15000000000",
       currency: "сум",
       deadline: "2025-01-20",
       status: "active",
@@ -60,7 +62,7 @@ const Index = () => {
       id: "3",
       title: "Поставка медицинского оборудования",
       organization: "Министерство здравоохранения",
-      budget: "850,000,000", 
+      budget: "850000000", 
       currency: "сум",
       deadline: "2025-01-25",
       status: "active",
@@ -68,6 +70,14 @@ const Index = () => {
       description: "Поставка современного медицинского оборудования для поликлиник"
     }
   ];
+
+  const toggleFavorite = (id: string) => {
+    setFavorites(prev => 
+      prev.includes(id) 
+        ? prev.filter(fav => fav !== id)
+        : [...prev, id]
+    );
+  };
 
   const applyFilters = (tenders: typeof mockTenders) => {
     return tenders.filter(tender => {
@@ -174,6 +184,24 @@ const Index = () => {
           >
             <Search className="w-4 h-4 mr-2" />
             Поиск тендеров
+          </Button>
+          <Button
+            variant={activeTab === "calendar" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("calendar")}
+            className={activeTab === "calendar" ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white" : ""}
+          >
+            <CalendarDays className="w-4 h-4 mr-2" />
+            Календарь
+          </Button>
+          <Button
+            variant={activeTab === "favorites" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("favorites")}
+            className={activeTab === "favorites" ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white" : ""}
+          >
+            <Heart className="w-4 h-4 mr-2" />
+            Избранное {favorites.length > 0 && `(${favorites.length})`}
           </Button>
           <Button
             variant={activeTab === "documents" ? "default" : "ghost"}
@@ -293,11 +321,28 @@ const Index = () => {
                 </Card>
               ) : (
                 filteredTenders.map((tender) => (
-                  <TenderCard key={tender.id} tender={tender} />
+                  <TenderCard 
+                    key={tender.id} 
+                    tender={tender} 
+                    isFavorite={favorites.includes(tender.id)}
+                    onToggleFavorite={toggleFavorite}
+                  />
                 ))
               )}
             </div>
           </div>
+        )}
+
+        {activeTab === "calendar" && (
+          <TenderCalendar tenders={mockTenders} />
+        )}
+
+        {activeTab === "favorites" && (
+          <FavoriteTenders 
+            favorites={favorites}
+            onToggleFavorite={toggleFavorite}
+            allTenders={mockTenders}
+          />
         )}
 
         {activeTab === "documents" && <DocumentHelper />}
