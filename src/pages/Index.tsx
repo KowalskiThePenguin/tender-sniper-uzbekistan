@@ -155,7 +155,7 @@ const Index = () => {
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">TenderHelper</h1>
+                <h1 className="text-xl font-bold text-gray-900">Tender Work</h1>
                 <p className="text-sm text-gray-600">Помощник по тендерам Узбекистана</p>
               </div>
             </div>
