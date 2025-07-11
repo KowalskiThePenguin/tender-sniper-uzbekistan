@@ -57,41 +57,41 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
   };
 
   return (
-    <Card className="bg-white/90 backdrop-blur-sm border border-blue-100 hover:shadow-xl transition-all duration-300 hover:border-blue-300 group">
+    <Card className="bg-white/95 backdrop-blur-sm border border-yellow-200 hover:shadow-xl transition-all duration-300 hover:border-yellow-400 group">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
               <Badge 
                 variant={tender.status === 'active' ? 'default' : 'secondary'}
-                className={tender.status === 'active' ? 'bg-green-100 text-green-800 border-green-200' : ''}
+                className={tender.status === 'active' ? 'bg-green-100 text-green-800 border-green-300' : 'bg-gray-100 text-gray-800 border-gray-300'}
               >
                 {tender.status === 'active' ? 'Активный' : 'Неактивный'}
               </Badge>
-              <Badge variant="outline" className="border-blue-200 text-blue-700">
+              <Badge variant="outline" className="border-yellow-400 text-yellow-800 bg-yellow-50">
                 {tender.category}
               </Badge>
               {isUrgent && (
-                <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-200">
+                <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-300">
                   <Clock className="w-3 h-3 mr-1" />
                   Срочно
                 </Badge>
               )}
             </div>
             <h3 
-              className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors cursor-pointer"
+              className="text-lg font-semibold text-black mb-2 group-hover:text-yellow-700 transition-colors cursor-pointer"
               onClick={handleDetailsClick}
             >
               {tender.title}
             </h3>
-            <p className="text-sm text-gray-600 line-clamp-2">{tender.description}</p>
+            <p className="text-sm text-gray-700 line-clamp-2">{tender.description}</p>
           </div>
           {onToggleFavorite && (
             <Button
               size="sm"
               variant="ghost"
               onClick={handleFavoriteClick}
-              className={`ml-2 ${isFavorite ? 'text-red-500 hover:text-red-600' : 'text-gray-400 hover:text-red-500'}`}
+              className={`ml-2 ${isFavorite ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-red-500'}`}
             >
               <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
             </Button>
@@ -102,44 +102,44 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
-            <div className="flex items-center text-gray-600">
-              <Building className="w-4 h-4 mr-2 text-blue-500" />
+            <div className="flex items-center text-gray-700">
+              <Building className="w-4 h-4 mr-2 text-yellow-600" />
               <span className="text-sm">{tender.organization}</span>
             </div>
-            <div className="flex items-center text-gray-600">
-              <Calendar className="w-4 h-4 mr-2 text-blue-500" />
+            <div className="flex items-center text-gray-700">
+              <Calendar className="w-4 h-4 mr-2 text-yellow-600" />
               <span className="text-sm">Дедлайн: {formatDate(tender.deadline)}</span>
-              <span className={`ml-2 text-xs font-medium ${isUrgent ? 'text-red-600' : 'text-gray-500'}`}>
+              <span className={`ml-2 text-xs font-medium ${isUrgent ? 'text-red-600' : 'text-gray-600'}`}>
                 ({daysLeft} дн.)
               </span>
             </div>
           </div>
           
           <div className="space-y-3">
-            <div className="flex items-center text-gray-600">
-              <DollarSign className="w-4 h-4 mr-2 text-green-500" />
+            <div className="flex items-center text-gray-700">
+              <DollarSign className="w-4 h-4 mr-2 text-green-600" />
               <span className="text-sm font-medium">
                 {Number(tender.budget).toLocaleString('ru-RU')} {tender.currency}
               </span>
             </div>
-            <div className="flex items-center text-gray-600">
-              <MapPin className="w-4 h-4 mr-2 text-purple-500" />
+            <div className="flex items-center text-gray-700">
+              <MapPin className="w-4 h-4 mr-2 text-purple-600" />
               <span className="text-sm">Узбекистан</span>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-yellow-200">
           <Button 
             onClick={handleDetailsClick}
-            className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
+            className="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 transition-all duration-300 text-black"
           >
             <FileText className="w-4 h-4 mr-2" />
             Подробнее
           </Button>
           <Button 
             variant="outline" 
-            className="border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300"
+            className="border-green-300 text-green-700 hover:bg-green-50 hover:border-green-400"
           >
             Собрать документы
           </Button>
