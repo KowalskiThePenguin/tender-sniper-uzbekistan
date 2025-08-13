@@ -139,13 +139,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-yellow-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md border-b border-yellow-200 sticky top-0 z-50">
+      <header className="bg-white/90 backdrop-blur-md border-b border-blue-200 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-primary to-blue-600 rounded-xl flex items-center justify-center">
                 <TrendingUp className="w-6 h-6 text-black" />
               </div>
               <div>
@@ -154,11 +154,11 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm" className="border-yellow-300 hover:bg-yellow-50">
+              <Button variant="outline" size="sm" className="border-primary hover:bg-blue-50">
                 <Bell className="w-4 h-4 mr-2" />
                 Уведомления
               </Button>
-              <Button size="sm" className="bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black">
+              <Button size="sm" className="bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white">
                 <FileText className="w-4 h-4 mr-2" />
                 Мои документы
               </Button>
@@ -169,12 +169,12 @@ const Index = () => {
 
       {/* Navigation Tabs */}
       <div className="container mx-auto px-4 py-6">
-        <div className="flex space-x-1 bg-white/80 backdrop-blur-sm p-1 rounded-xl border border-yellow-200 w-fit">
+        <div className="flex space-x-1 bg-white/80 backdrop-blur-sm p-1 rounded-xl border border-blue-200 w-fit">
           <Button
             variant={activeTab === "tenders" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("tenders")}
-            className={activeTab === "tenders" ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black hover:from-yellow-500 hover:to-yellow-700" : "hover:bg-yellow-50"}
+            className={activeTab === "tenders" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
           >
             <Search className="w-4 h-4 mr-2" />
             Поиск тендеров
@@ -183,7 +183,7 @@ const Index = () => {
             variant={activeTab === "calendar" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("calendar")}
-            className={activeTab === "calendar" ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black hover:from-yellow-500 hover:to-yellow-700" : "hover:bg-yellow-50"}
+            className={activeTab === "calendar" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
           >
             <CalendarDays className="w-4 h-4 mr-2" />
             Календарь
@@ -192,7 +192,7 @@ const Index = () => {
             variant={activeTab === "favorites" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("favorites")}
-            className={activeTab === "favorites" ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black hover:from-yellow-500 hover:to-yellow-700" : "hover:bg-yellow-50"}
+            className={activeTab === "favorites" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
           >
             <Heart className="w-4 h-4 mr-2" />
             Избранное {favorites.length > 0 && `(${favorites.length})`}
@@ -201,7 +201,7 @@ const Index = () => {
             variant={activeTab === "documents" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("documents")}
-            className={activeTab === "documents" ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black hover:from-yellow-500 hover:to-yellow-700" : "hover:bg-yellow-50"}
+            className={activeTab === "documents" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
           >
             <FileText className="w-4 h-4 mr-2" />
             Документы
@@ -210,7 +210,7 @@ const Index = () => {
             variant={activeTab === "notifications" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("notifications")}
-            className={activeTab === "notifications" ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black hover:from-yellow-500 hover:to-yellow-700" : "hover:bg-yellow-50"}
+            className={activeTab === "notifications" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
           >
             <Bell className="w-4 h-4 mr-2" />
             Уведомления
@@ -222,9 +222,9 @@ const Index = () => {
         {activeTab === "tenders" && (
           <div className="space-y-6">
             {/* Search and Filter Section */}
-            <Card className="bg-white/90 backdrop-blur-sm border-yellow-200 shadow-lg">
+            <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent">
                   Поиск активных тендеров
                 </CardTitle>
               </CardHeader>
@@ -236,23 +236,23 @@ const Index = () => {
                       placeholder="Поиск по названию, организации или категории..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 h-12 border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500"
+                      className="pl-10 h-12 border-blue-300 focus:border-primary focus:ring-primary"
                     />
                   </div>
                   <Button 
                     variant="outline" 
-                    className="h-12 px-6 border-yellow-300 hover:bg-yellow-50"
+                    className="h-12 px-6 border-blue-300 hover:bg-blue-50"
                     onClick={() => setShowFilters(true)}
                   >
                     <Filter className="w-4 h-4 mr-2" />
                     Фильтры
                     {getActiveFiltersCount() > 0 && (
-                      <Badge className="ml-2 bg-yellow-100 text-yellow-800 border-yellow-300">
+                      <Badge className="ml-2 bg-blue-100 text-blue-800 border-blue-300">
                         {getActiveFiltersCount()}
                       </Badge>
                     )}
                   </Button>
-                  <Button className="h-12 px-6 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black">
+                  <Button className="h-12 px-6 bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white">
                     <Calendar className="w-4 h-4 mr-2" />
                     По дате
                   </Button>
@@ -260,25 +260,25 @@ const Index = () => {
                 
                 {/* Active Filters Display */}
                 {getActiveFiltersCount() > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-yellow-200">
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-blue-200">
                     <span className="text-sm text-gray-700 font-medium">Активные фильтры:</span>
                     {filters.category !== "Все категории" && (
-                      <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-300">
                         {filters.category}
                       </Badge>
                     )}
                     {filters.organization !== "Все организации" && (
-                      <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-300">
                         {filters.organization}
                       </Badge>
                     )}
                     {filters.status !== "Все статусы" && (
-                      <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-300">
                         {filters.status}
                       </Badge>
                     )}
                     {filters.deadline !== "Все сроки" && (
-                      <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-300">
                         {filters.deadline}
                       </Badge>
                     )}
@@ -287,8 +287,8 @@ const Index = () => {
                 
                 {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-                  <div className="text-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200">
-                    <div className="text-2xl font-bold text-yellow-700">{filteredTenders.length}</div>
+                  <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+                    <div className="text-2xl font-bold text-blue-700">{filteredTenders.length}</div>
                     <div className="text-sm text-gray-700">Найдено тендеров</div>
                   </div>
                   <div className="text-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
@@ -306,7 +306,7 @@ const Index = () => {
             {/* Tenders List */}
             <div className="space-y-4">
               {filteredTenders.length === 0 ? (
-                <Card className="bg-white/90 backdrop-blur-sm border-yellow-200">
+                <Card className="bg-white/90 backdrop-blur-sm border-blue-200">
                   <CardContent className="text-center py-12">
                     <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Тендеры не найдены</h3>

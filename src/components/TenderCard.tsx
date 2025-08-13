@@ -57,7 +57,7 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
   };
 
   return (
-    <Card className="bg-white/95 backdrop-blur-sm border border-yellow-200 hover:shadow-xl transition-all duration-300 hover:border-yellow-400 group">
+    <Card className="bg-white/95 backdrop-blur-sm border border-blue-200 hover:shadow-xl transition-all duration-300 hover:border-blue-400 group">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <div className="flex-1">
@@ -68,7 +68,7 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
               >
                 {tender.status === 'active' ? 'Активный' : 'Неактивный'}
               </Badge>
-              <Badge variant="outline" className="border-yellow-400 text-yellow-800 bg-yellow-50">
+              <Badge variant="outline" className="border-blue-400 text-blue-800 bg-blue-50">
                 {tender.category}
               </Badge>
               {isUrgent && (
@@ -79,7 +79,7 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
               )}
             </div>
             <h3 
-              className="text-lg font-semibold text-black mb-2 group-hover:text-yellow-700 transition-colors cursor-pointer"
+              className="text-lg font-semibold text-black mb-2 group-hover:text-blue-700 transition-colors cursor-pointer"
               onClick={handleDetailsClick}
             >
               {tender.title}
@@ -103,11 +103,11 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="flex items-center text-gray-700">
-              <Building className="w-4 h-4 mr-2 text-yellow-600" />
+              <Building className="w-4 h-4 mr-2 text-blue-600" />
               <span className="text-sm">{tender.organization}</span>
             </div>
             <div className="flex items-center text-gray-700">
-              <Calendar className="w-4 h-4 mr-2 text-yellow-600" />
+              <Calendar className="w-4 h-4 mr-2 text-blue-600" />
               <span className="text-sm">Дедлайн: {formatDate(tender.deadline)}</span>
               <span className={`ml-2 text-xs font-medium ${isUrgent ? 'text-red-600' : 'text-gray-600'}`}>
                 ({daysLeft} дн.)
@@ -129,10 +129,10 @@ export const TenderCard = ({ tender, isFavorite = false, onToggleFavorite }: Ten
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-yellow-200">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-blue-200">
           <Button 
             onClick={handleDetailsClick}
-            className="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 transition-all duration-300 text-black"
+            className="flex-1 bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 text-white"
           >
             <FileText className="w-4 h-4 mr-2" />
             Подробнее

@@ -79,7 +79,7 @@ export const DocumentHelper = () => {
       case "completed":
         return <Badge className="bg-green-100 text-green-800 border-green-200">Готов</Badge>;
       case "pending":
-        return <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">В работе</Badge>;
+        return <Badge className="bg-blue-100 text-blue-800 border-blue-200">В работе</Badge>;
       case "missing":
         return <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-200">Отсутствует</Badge>;
       default:
@@ -92,7 +92,7 @@ export const DocumentHelper = () => {
       case "completed":
         return <CheckCircle2 className="w-5 h-5 text-green-500" />;
       case "pending":
-        return <AlertCircle className="w-5 h-5 text-yellow-500" />;
+        return <AlertCircle className="w-5 h-5 text-blue-500" />;
       case "missing":
         return <AlertCircle className="w-5 h-5 text-red-500" />;
       default:

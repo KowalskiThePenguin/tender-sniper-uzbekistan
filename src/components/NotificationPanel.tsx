@@ -75,7 +75,7 @@ export const NotificationPanel = () => {
       case "high":
         return <Badge className="bg-orange-100 text-orange-800 border-orange-200">Важное</Badge>;
       case "medium":
-        return <Badge variant="outline" className="border-yellow-200 text-yellow-700">Средний</Badge>;
+        return <Badge variant="outline" className="border-blue-200 text-blue-700">Средний</Badge>;
       case "low":
         return <Badge variant="outline" className="border-gray-200 text-gray-600">Низкий</Badge>;
       default:
