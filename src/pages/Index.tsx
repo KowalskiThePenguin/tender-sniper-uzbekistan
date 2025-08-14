@@ -70,6 +70,81 @@ const Index = () => {
     }
   ];
 
+  const mockAuctions = [
+    {
+      id: "a1",
+      title: "Продажа государственного имущества",
+      organization: "Комитет по управлению госимуществом",
+      startPrice: "500000000",
+      currentPrice: "750000000",
+      currency: "сум",
+      deadline: "2025-01-18",
+      status: "active",
+      category: "Недвижимость",
+      description: "Аукцион по продаже административного здания в центре города"
+    },
+    {
+      id: "a2",
+      title: "Аукцион автотранспорта",
+      organization: "Министерство транспорта",
+      startPrice: "120000000",
+      currentPrice: "180000000",
+      currency: "сум",
+      deadline: "2025-01-22",
+      status: "active",
+      category: "Транспорт",
+      description: "Продажа списанных служебных автомобилей"
+    }
+  ];
+
+  const mockEshop = [
+    {
+      id: "e1",
+      title: "Канцелярские товары",
+      supplier: "ООО 'ОфисПро'",
+      price: "15000",
+      currency: "сум",
+      available: true,
+      category: "Канцтовары",
+      description: "Полный комплект канцелярских принадлежностей для офиса"
+    },
+    {
+      id: "e2",
+      title: "Компьютерная техника",
+      supplier: "ТОО 'ТехноМарт'",
+      price: "8500000",
+      currency: "сум",
+      available: true,
+      category: "Техника",
+      description: "Ноутбуки, мониторы и периферийные устройства"
+    }
+  ];
+
+  const mockContests = [
+    {
+      id: "c1",
+      title: "Конкурс архитектурных проектов",
+      organization: "Министерство строительства",
+      prize: "100000000",
+      currency: "сум",
+      deadline: "2025-02-01",
+      status: "active",
+      category: "Архитектура",
+      description: "Разработка проекта современного культурного центра"
+    },
+    {
+      id: "c2",
+      title: "IT-конкурс разработки приложения",
+      organization: "Агентство по развитию IT",
+      prize: "75000000",
+      currency: "сум",
+      deadline: "2025-02-15",
+      status: "active",
+      category: "IT",
+      description: "Создание мобильного приложения для государственных услуг"
+    }
+  ];
+
   const toggleFavorite = (id: string) => {
     setFavorites(prev => 
       prev.includes(id) 
@@ -376,59 +451,166 @@ const Index = () => {
         )}
 
         {activeTab === "auction" && (
-          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
-                <Gavel className="w-6 h-6 mr-2" />
-                Аукционы
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">Здесь будут отображаться активные аукционы</p>
-            </CardContent>
-          </Card>
+          <div className="space-y-4">
+            <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                  <Gavel className="w-6 h-6 mr-2" />
+                  Активные аукционы
+                </CardTitle>
+              </CardHeader>
+            </Card>
+            {mockAuctions.map((auction) => (
+              <Card key={auction.id} className="bg-white/90 backdrop-blur-sm border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{auction.title}</h3>
+                      <p className="text-sm text-gray-600 mb-3">{auction.description}</p>
+                      <div className="flex items-center space-x-4 text-sm text-gray-600">
+                        <span>Организатор: {auction.organization}</span>
+                        <Badge className="bg-blue-100 text-blue-800">{auction.category}</Badge>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="text-sm text-gray-600">Стартовая цена</div>
+                      <div className="text-lg font-bold text-green-700">{parseInt(auction.startPrice).toLocaleString()} {auction.currency}</div>
+                    </div>
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                      <div className="text-sm text-gray-600">Текущая цена</div>
+                      <div className="text-lg font-bold text-blue-700">{parseInt(auction.currentPrice).toLocaleString()} {auction.currency}</div>
+                    </div>
+                    <div className="bg-red-50 p-3 rounded-lg border border-red-200">
+                      <div className="text-sm text-gray-600">Окончание</div>
+                      <div className="text-lg font-bold text-red-700">{new Date(auction.deadline).toLocaleDateString('ru-RU')}</div>
+                    </div>
+                  </div>
+                  <div className="flex space-x-3">
+                    <Button className="bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white">
+                      Сделать ставку
+                    </Button>
+                    <Button variant="outline" className="border-blue-300 hover:bg-blue-50">
+                      Подробнее
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         )}
 
         {activeTab === "tender" && (
-          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
-                <Building className="w-6 h-6 mr-2" />
-                Тендеры
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">Здесь будут отображаться государственные тендеры</p>
-            </CardContent>
-          </Card>
+          <div className="space-y-4">
+            <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                  <Building className="w-6 h-6 mr-2" />
+                  Государственные тендеры
+                </CardTitle>
+              </CardHeader>
+            </Card>
+            {mockTenders.map((tender) => (
+              <TenderCard 
+                key={tender.id} 
+                tender={tender} 
+                isFavorite={favorites.includes(tender.id)}
+                onToggleFavorite={toggleFavorite}
+              />
+            ))}
+          </div>
         )}
 
         {activeTab === "eshop" && (
-          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
-                <ShoppingCart className="w-6 h-6 mr-2" />
-                Электронный магазин
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">Здесь будет электронный магазин для закупок</p>
-            </CardContent>
-          </Card>
+          <div className="space-y-4">
+            <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                  <ShoppingCart className="w-6 h-6 mr-2" />
+                  Электронный магазин
+                </CardTitle>
+              </CardHeader>
+            </Card>
+            {mockEshop.map((item) => (
+              <Card key={item.id} className="bg-white/90 backdrop-blur-sm border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
+                      <p className="text-sm text-gray-600 mb-3">{item.description}</p>
+                      <div className="flex items-center space-x-4 text-sm text-gray-600">
+                        <span>Поставщик: {item.supplier}</span>
+                        <Badge className="bg-blue-100 text-blue-800">{item.category}</Badge>
+                        {item.available && <Badge className="bg-green-100 text-green-800">В наличии</Badge>}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                      <div className="text-sm text-gray-600">Цена</div>
+                      <div className="text-lg font-bold text-blue-700">{parseInt(item.price).toLocaleString()} {item.currency}</div>
+                    </div>
+                    <div className="flex space-x-3">
+                      <Button className="bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white">
+                        Добавить в корзину
+                      </Button>
+                      <Button variant="outline" className="border-blue-300 hover:bg-blue-50">
+                        Подробнее
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         )}
 
         {activeTab === "contest" && (
-          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
-                <Trophy className="w-6 h-6 mr-2" />
-                Конкурсы
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">Здесь будут отображаться активные конкурсы</p>
-            </CardContent>
-          </Card>
+          <div className="space-y-4">
+            <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                  <Trophy className="w-6 h-6 mr-2" />
+                  Активные конкурсы
+                </CardTitle>
+              </CardHeader>
+            </Card>
+            {mockContests.map((contest) => (
+              <Card key={contest.id} className="bg-white/90 backdrop-blur-sm border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{contest.title}</h3>
+                      <p className="text-sm text-gray-600 mb-3">{contest.description}</p>
+                      <div className="flex items-center space-x-4 text-sm text-gray-600">
+                        <span>Организатор: {contest.organization}</span>
+                        <Badge className="bg-blue-100 text-blue-800">{contest.category}</Badge>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="text-sm text-gray-600">Призовой фонд</div>
+                      <div className="text-lg font-bold text-green-700">{parseInt(contest.prize).toLocaleString()} {contest.currency}</div>
+                    </div>
+                    <div className="bg-red-50 p-3 rounded-lg border border-red-200">
+                      <div className="text-sm text-gray-600">Окончание приема заявок</div>
+                      <div className="text-lg font-bold text-red-700">{new Date(contest.deadline).toLocaleDateString('ru-RU')}</div>
+                    </div>
+                  </div>
+                  <div className="flex space-x-3">
+                    <Button className="bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white">
+                      Подать заявку
+                    </Button>
+                    <Button variant="outline" className="border-blue-300 hover:bg-blue-50">
+                      Подробнее
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         )}
 
         {activeTab === "documents" && <DocumentHelper />}
