@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Bell, FileText, Calendar, Filter, TrendingUp, Heart, CalendarDays } from "lucide-react";
+import { Search, Bell, FileText, Calendar, Filter, TrendingUp, Heart, CalendarDays, Gavel, ShoppingCart, Trophy, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -207,6 +207,42 @@ const Index = () => {
             Документы
           </Button>
           <Button
+            variant={activeTab === "auction" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("auction")}
+            className={activeTab === "auction" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
+          >
+            <Gavel className="w-4 h-4 mr-2" />
+            Аукцион
+          </Button>
+          <Button
+            variant={activeTab === "tender" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("tender")}
+            className={activeTab === "tender" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
+          >
+            <Building className="w-4 h-4 mr-2" />
+            Тендер
+          </Button>
+          <Button
+            variant={activeTab === "eshop" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("eshop")}
+            className={activeTab === "eshop" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
+          >
+            <ShoppingCart className="w-4 h-4 mr-2" />
+            Электронный магазин
+          </Button>
+          <Button
+            variant={activeTab === "contest" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("contest")}
+            className={activeTab === "contest" ? "bg-gradient-to-r from-primary to-blue-600 text-white hover:from-blue-600 hover:to-blue-700" : "hover:bg-blue-50"}
+          >
+            <Trophy className="w-4 h-4 mr-2" />
+            Конкурс
+          </Button>
+          <Button
             variant={activeTab === "notifications" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("notifications")}
@@ -337,6 +373,62 @@ const Index = () => {
             onToggleFavorite={toggleFavorite}
             allTenders={mockTenders}
           />
+        )}
+
+        {activeTab === "auction" && (
+          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                <Gavel className="w-6 h-6 mr-2" />
+                Аукционы
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Здесь будут отображаться активные аукционы</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {activeTab === "tender" && (
+          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                <Building className="w-6 h-6 mr-2" />
+                Тендеры
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Здесь будут отображаться государственные тендеры</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {activeTab === "eshop" && (
+          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                <ShoppingCart className="w-6 h-6 mr-2" />
+                Электронный магазин
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Здесь будет электронный магазин для закупок</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {activeTab === "contest" && (
+          <Card className="bg-white/90 backdrop-blur-sm border-blue-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent flex items-center">
+                <Trophy className="w-6 h-6 mr-2" />
+                Конкурсы
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Здесь будут отображаться активные конкурсы</p>
+            </CardContent>
+          </Card>
         )}
 
         {activeTab === "documents" && <DocumentHelper />}
